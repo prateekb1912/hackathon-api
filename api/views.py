@@ -56,3 +56,18 @@ class CreateSubmissionView(generics.CreateAPIView):
         )
 
         return Response(SubmissionSerializer(submission).data, status=status.HTTP_201_CREATED)
+
+class EnrolledHackathonsListAPIView(generics.ListAPIView):
+    serializer_class = HackathonSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Hackathon.objects.filter(submissions__user=self.request.user).distinct()
+
+class UserSubmissionsListAPIView(generics.ListAPIView):
+    serializer_class = SubmissionSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        hackathon_id = self.kwargs['hackathon_id']
+        return Submission.objects.filter(user=self.request.user, hackathon_id=hackathon_id)
