@@ -10,3 +10,24 @@ class HackathonRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = HackathonRegistration
         fields = ['submission']
+
+class SubmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Submission
+        fields = ['name', 'summary', 'submission_file', 'submission_link', 'submission_image']
+        read_only_fields = ['user', 'hackathon']
+
+    def validate(self, data):
+        hackathon = self.context.get('hackathon')
+        submission_type = hackathon.submission_type
+
+        if submission_type == Submission.IMAGE and not data.get('submission_image'):
+            raise serializers.ValidationError("A submission image is required for this hackathon.")
+
+        if submission_type == Submission.FILE and not data.get('submission_file'):
+            raise serializers.ValidationError("A submission file is required for this hackathon.")
+
+        if submission_type == Submission.LINK and not data.get('submission_link'):
+            raise serializers.ValidationError("A submission link is required for this hackathon.")
+
+        return data
