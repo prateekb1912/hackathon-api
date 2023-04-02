@@ -1,6 +1,6 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from .serializers import HackathonSerializer, HackathonRegistrationSerializer
+from .serializers import HackathonSerializer, HackathonRegistrationSerializer, SubmissionSerializer
 from .models import Hackathon, Submission
 
 class CreateHackathonView(generics.CreateAPIView):

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Hackathon
+from .models import Hackathon, HackathonRegistration, Submission
 
 class HackathonSerializer(serializers.ModelSerializer):
     class Meta:

@@ -26,6 +26,19 @@ class Hackathon(models.Model):
     end_datetime = models.DateTimeField()
     reward_prize = models.DecimalField(max_digits=10, decimal_places=2)
 
+class HackathonRegistration(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    hackathon = models.ForeignKey(Hackathon, on_delete=models.CASCADE)
+    registered_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('user', 'hackathon')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.hackathon.title}"
+
+
 class Submission(models.Model):
     SUBMISSION_TYPE_CHOICES = [
         ('image', 'Image'),
