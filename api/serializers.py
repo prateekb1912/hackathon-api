@@ -5,3 +5,8 @@ class HackathonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hackathon
         fields = ['title', 'description', 'background_image', 'hackathon_image', 'submission_type', 'start_datetime', 'end_datetime', 'reward_prize']
+
+class HackathonRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HackathonRegistration
+        fields = ['submission']
