@@ -10,3 +10,7 @@ class CreateHackathonView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+class ListHackathonsView(generics.ListAPIView):
+    queryset = Hackathon.objects.all()
+    serializer_class = HackathonSerializer
